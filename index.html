@@ -1,213 +1,177 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restaurante App</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans transition-all duration-300">
 
-  <!-- Navegación -->
-  <nav class="bg-white shadow p-4 fixed top-0 left-0 right-0 z-10">
-    <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-xl font-bold">Restaurante App</h1>
-      <div>
-        <button onclick="mostrarVista('cliente')" class="mx-2 text-sm hover:underline">Cliente</button>
-        <button onclick="mostrarVista('cocina')" class="mx-2 text-sm hover:underline">Cocina</button>
-        <button onclick="mostrarVista('gerente')" class="mx-2 text-sm hover:underline">Gerente</button>
-        <button onclick="reiniciarSistema()" class="mx-2 text-sm text-red-600 hover:underline">Reiniciar</button>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Cliente -->
-  <section id="vista-cliente" class="pt-24 hidden">
-    <div class="container mx-auto">
-      <h2 class="text-2xl font-semibold mb-4">Menú del Restaurante</h2>
-      <select id="filtroCategoria" onchange="cargarMenu()" class="mb-4 p-2 border rounded">
-        <option value="">-- Todas las categorías --</option>
-        <option value="Entrada">Entrada</option>
-        <option value="Plato de fondo">Plato de fondo</option>
-        <option value="Bebida">Bebida</option>
-      </select>
-      <div id="menu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-      <div class="mt-6">
-        <h3 class="text-xl font-semibold">Pedido Actual</h3>
-        <ul id="resumenPedido" class="list-disc list-inside mb-2"></ul>
-        <p id="totalPedido" class="mb-2 font-bold"></p>
-        <button onclick="enviarPedido()" class="bg-green-500 text-white px-4 py-2 rounded">Enviar a cocina</button>
-        <button onclick="mostrarPago()" class="ml-2 bg-indigo-500 text-white px-4 py-2 rounded">Solicitar Cuenta</button>
-      </div>
-      <div id="metodoPago" class="mt-4 hidden">
-        <p class="mb-2 font-semibold">Método de pago:</p>
-        <select class="border p-2 rounded">
-          <option>Efectivo</option>
-          <option>Tarjeta</option>
-          <option>Billetera Digital</option>
-        </select>
-      </div>
+  <!-- LOGIN -->
+  <section id="login" class="h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded shadow-md w-96">
+      <h2 class="text-2xl font-bold mb-4 text-center">Iniciar Sesión</h2>
+      <label class="block mb-2">Usuario:</label>
+      <input type="text" id="usuario" class="w-full p-2 border rounded mb-4" placeholder="camarero / cocinero / gerente">
+      <label class="block mb-2">Contraseña:</label>
+      <input type="password" id="contrasena" class="w-full p-2 border rounded mb-4" placeholder="1234">
+      <button onclick="iniciarSesion()" class="w-full bg-blue-600 text-white p-2 rounded">Entrar</button>
     </div>
   </section>
 
-  <!-- Cocina -->
-  <section id="vista-cocina" class="pt-24 hidden">
-    <div class="container mx-auto">
-      <h2 class="text-2xl font-semibold mb-4">Pedidos en Cocina</h2>
-      <div id="panelCocina" class="space-y-4"></div>
-    </div>
-  </section>
-
-  <!-- Gerente -->
-  <section id="vista-gerente" class="pt-24 hidden">
-    <div class="container mx-auto">
-      <h2 class="text-2xl font-semibold mb-4">Resumen de Ventas</h2>
-      <div class="mb-4">
-        <button onclick="exportarVentas()" class="bg-blue-600 text-white px-4 py-2 rounded">Exportar CSV</button>
+  <!-- APLICACIÓN -->
+  <div id="app" class="hidden">
+    <nav class="bg-white shadow p-4 fixed top-0 left-0 right-0 z-10">
+      <div id="saludo" class="absolute top-16 left-4 text-sm text-gray-600"></div>
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">Restaurante App</h1>
+        <div>
+          <button onclick="mostrarVista('cliente')" class="mx-2 text-sm hover:underline">Cliente</button>
+          <button onclick="mostrarVista('cocina')" class="mx-2 text-sm hover:underline">Cocina</button>
+          <button onclick="mostrarVista('gerente')" class="mx-2 text-sm hover:underline">Gerente</button>
+          <button onclick="cerrarSesion()" class="mx-2 text-sm text-red-600 hover:underline">Cerrar Sesión</button>
+        </div>
       </div>
-      <div id="panelGerente"></div>
-    </div>
-  </section>
+    </nav>
+
+    <!-- Cliente -->
+    <section id="vista-cliente" class="pt-24 hidden">
+      <div class="container mx-auto">
+        <h2 class="text-2xl font-semibold mb-4">Menú del Restaurante</h2>
+        <div id="menu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+    </section>
+
+    <!-- Cocina -->
+    <section id="vista-cocina" class="pt-24 hidden">
+      <div class="container mx-auto">
+        <h2 class="text-2xl font-semibold mb-4">Pedidos en Cocina</h2>
+        <div id="panelCocina" class="space-y-4"></div>
+      </div>
+    </section>
+
+    <!-- Gerente -->
+    <section id="vista-gerente" class="pt-24 hidden">
+      <div class="container mx-auto">
+        <h2 class="text-2xl font-semibold mb-4">Resumen de Ventas</h2>
+        <div id="panelGerente"></div>
+      </div>
+    </section>
+  </div>
 
   <script>
-    const platos = [
-      { id: 1, nombre: "Lomo Saltado", precio: 22, categoria: "Plato de fondo", disponible: true },
-      { id: 2, nombre: "Causa Limeña", precio: 12, categoria: "Entrada", disponible: true },
-      { id: 3, nombre: "Inka Kola", precio: 6, categoria: "Bebida", disponible: true },
-    ];
-
-    const camareros = [
-      { id: 101, nombre: "Mario Galiano" },
-      { id: 102, nombre: "Juan Rojas" }
-    ];
-
-    const pedidoActual = [];
-    let pedidos = JSON.parse(localStorage.getItem('pedidos')) || [];
-
-    function mostrarVista(vista) {
-      document.querySelectorAll('section').forEach(sec => sec.classList.add('hidden'));
-      document.getElementById(`vista-${vista}`).classList.remove('hidden');
-      if (vista === 'cliente') cargarMenu();
-      if (vista === 'cocina') cargarCocina();
-      if (vista === 'gerente') cargarGerente();
-    }
-
-    function cargarMenu() {
-      const cont = document.getElementById('menu');
-      const filtro = document.getElementById('filtroCategoria').value;
-      cont.innerHTML = '';
-      platos.filter(p => !filtro || p.categoria === filtro).forEach(plato => {
-        const card = document.createElement('div');
-        card.className = 'bg-white p-4 shadow rounded';
-        card.innerHTML = `<h3 class='text-lg font-bold'>${plato.nombre}</h3>
-                          <p>S/. ${plato.precio}</p>
-                          <button onclick='agregarPlato(${plato.id})' class='mt-2 bg-blue-500 text-white px-2 py-1 rounded'>Agregar</button>`;
-        cont.appendChild(card);
-      });
-      actualizarResumen();
-    }
-
-    function agregarPlato(id) {
-      const plato = platos.find(p => p.id === id);
-      pedidoActual.push(plato);
-      actualizarResumen();
-    }
-
-    function actualizarResumen() {
-      const resumen = document.getElementById('resumenPedido');
-      resumen.innerHTML = '';
-      let total = 0;
-      pedidoActual.forEach(p => {
-        const li = document.createElement('li');
-        li.textContent = `${p.nombre} - S/. ${p.precio}`;
-        resumen.appendChild(li);
-        total += p.precio;
-      });
-      document.getElementById('totalPedido').textContent = `Total: S/. ${total}`;
-    }
-
-    function enviarPedido() {
-      const nuevoPedido = {
-        id: Date.now(),
-        platos: [...pedidoActual],
-        estado: 'en preparación',
-        horaInicio: new Date().toLocaleTimeString(),
-        mesa: Math.floor(Math.random() * 10) + 1,
-        camareroId: 101
+    document.addEventListener("DOMContentLoaded", function () {
+      const credenciales = {
+        camarero: '1234',
+        cocinero: '1234',
+        gerente: '1234'
       };
-      pedidos.push(nuevoPedido);
-      localStorage.setItem('pedidos', JSON.stringify(pedidos));
-      pedidoActual.length = 0;
-      actualizarResumen();
-      alert('Pedido enviado a cocina');
-    }
 
-    function mostrarPago() {
-      document.getElementById('metodoPago').classList.remove('hidden');
-    }
+      const platos = [
+        { id: 1, nombre: "Lomo Saltado", precio: 22, categoria: "Plato de fondo", imagen: "https://www.comedera.com/wp-content/uploads/2022/09/lomo-saltado-peruano-shutterstock_1831845447.jpg" },
+        { id: 2, nombre: "Causa Limeña", precio: 12, categoria: "Entrada", imagen: "https://www.comedera.com/wp-content/uploads/2022/07/causa-limena.jpg" },
+        { id: 3, nombre: "Inka Kola", precio: 6, categoria: "Bebida", imagen: "https://upload.wikimedia.org/wikipedia/commons/f/f1/Inca_Kola_-_Bottle_300ml.jpg" },
+        { id: 4, nombre: "Ají de Gallina", precio: 18, categoria: "Plato de fondo", imagen: "https://www.comedera.com/wp-content/uploads/2021/03/aji-de-gallina-receta.jpg" },
+        { id: 5, nombre: "Papa a la Huancaína", precio: 10, categoria: "Entrada", imagen: "https://www.comedera.com/wp-content/uploads/2023/07/papa-a-la-huancaina-receta-peruana.jpg" },
+        { id: 6, nombre: "Chicha Morada", precio: 7, categoria: "Bebida", imagen: "https://peru.info/Contenido/Uploads/chichamorada-139-650.jpg" },
+        { id: 7, nombre: "Pollo a la Brasa", precio: 25, categoria: "Plato de fondo", imagen: "https://www.recetasnestle.com.pe/sites/default/files/srh_recipes/f709960d40b3c7f38290e6cbee6ad9f1.jpg" },
+        { id: 8, nombre: "Anticuchos", precio: 15, categoria: "Entrada", imagen: "https://www.recetasnestle.com.pe/sites/default/files/styles/recipe_detail_desktop/public/srh_recipes/1f86fc0d3342c89e8abdf2c398dbd7f2.jpg" },
+        { id: 9, nombre: "Agua Mineral", precio: 4, categoria: "Bebida", imagen: "https://images.squarespace-cdn.com/content/v1/5d8a939fbe4d4b79e0bc623b/1601574382658-OWMGK1Y3RVUB1A6IYJCS/Agua+San+Luis.jpg" }
+      ];
 
-    function cargarCocina() {
-      const cont = document.getElementById('panelCocina');
-      cont.innerHTML = '';
-      pedidos.sort((a, b) => new Date('1970/01/01 ' + a.horaInicio) - new Date('1970/01/01 ' + b.horaInicio))
-             .forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'bg-white p-4 rounded shadow';
-        const lista = p.platos.map(pl => `<li>${pl.nombre}</li>`).join('');
-        div.innerHTML = `<h4>Mesa ${p.mesa} - Pedido ${p.id}</h4><ul class='list-disc list-inside'>${lista}</ul>
-                         <p>Estado: ${p.estado}</p>
-                         <p>Hora: ${p.horaInicio}</p>
-                         <button onclick='marcarTerminado(${p.id})' class='mt-2 bg-green-500 text-white px-2 py-1 rounded'>Terminar</button>`;
-        cont.appendChild(div);
-      });
-    }
+      const pedidoActual = [];
+      const pedidos = [];
 
-    function marcarTerminado(id) {
-      const index = pedidos.findIndex(p => p.id === id);
-      pedidos[index].estado = 'terminado';
-      pedidos[index].horaFin = new Date().toLocaleTimeString();
-      localStorage.setItem('pedidos', JSON.stringify(pedidos));
-      cargarCocina();
-    }
-
-    function cargarGerente() {
-      const total = pedidos.reduce((acc, p) => acc + p.platos.reduce((s, pl) => s + pl.precio, 0), 0);
-      let ventasPorCamarero = {};
-      pedidos.forEach(p => {
-        const camarero = camareros.find(c => c.id === p.camareroId)?.nombre || 'Desconocido';
-        ventasPorCamarero[camarero] = (ventasPorCamarero[camarero] || 0) + p.platos.reduce((s, pl) => s + pl.precio, 0);
-      });
-      const div = document.getElementById('panelGerente');
-      div.innerHTML = `<p class='mb-4 font-semibold'>Total de ventas: S/. ${total}</p>` +
-        Object.entries(ventasPorCamarero).map(([camarero, monto]) => `<p>${camarero}: S/. ${monto}</p>`).join('');
-    }
-
-    function exportarVentas() {
-      let csv = 'Mesa,Pedido,Camarero,Total\n';
-      pedidos.forEach(p => {
-        const total = p.platos.reduce((acc, pl) => acc + pl.precio, 0);
-        const camarero = camareros.find(c => c.id === p.camareroId)?.nombre || 'N/A';
-        csv += `${p.mesa},${p.id},${camarero},${total}\n`;
-      });
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'ventas.csv';
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    function reiniciarSistema() {
-      if (confirm('¿Seguro que deseas reiniciar todos los datos del sistema?')) {
-        localStorage.removeItem('pedidos');
-        pedidos = [];
-        mostrarVista('cliente');
+      function iniciarSesion() {
+        const usuario = document.getElementById('usuario').value.trim();
+        const contrasena = document.getElementById('contrasena').value.trim();
+        if (credenciales[usuario] === contrasena) {
+          localStorage.setItem('rol', usuario);
+          document.getElementById('login').classList.add('hidden');
+          document.getElementById('app').classList.remove('hidden');
+          mostrarVista(usuario);
+          restringirVistasPorRol(usuario);
+          mostrarSaludo(usuario);
+        } else {
+          alert('Usuario o contraseña incorrectos');
+        }
       }
-    }
 
-    mostrarVista('cliente');
+      function cerrarSesion() {
+        localStorage.removeItem('rol');
+        location.reload();
+      }
+
+      function mostrarVista(vista) {
+        document.querySelectorAll('#app section').forEach(sec => sec.classList.add('hidden'));
+        const target = document.getElementById(`vista-${vista}`);
+        if (target) target.classList.remove('hidden');
+        if (vista === 'cliente') cargarMenu();
+      }
+
+      function cargarMenu() {
+        const cont = document.getElementById('menu');
+        if (!cont) return;
+        cont.innerHTML = '';
+        platos.forEach(plato => {
+          const card = document.createElement('div');
+          card.className = 'bg-white p-4 rounded shadow';
+          card.innerHTML = `
+            <img src="${plato.imagen}" alt="${plato.nombre}" class="w-full h-40 object-cover rounded mb-2">
+            <h3 class="text-lg font-bold">${plato.nombre}</h3>
+            <p class="text-sm">${plato.categoria}</p>
+            <p class="text-green-600 font-semibold">S/. ${plato.precio}</p>
+            <button class="mt-2 bg-blue-600 text-white px-3 py-1 rounded">Agregar</button>
+          `;
+          cont.appendChild(card);
+        });
+      }
+
+      function mostrarSaludo(rol) {
+  const saludo = document.getElementById('saludo');
+  if (saludo) {
+    const nombres = {
+      camarero: 'camarero 👨‍🍳',
+      cocinero: 'cocinero 🔥',
+      gerente: 'gerente 📊'
+    };
+    saludo.textContent = `Bienvenido, ${nombres[rol] || rol}`;
+  }
+}
+
+function restringirVistasPorRol(rol) {
+        const botones = {
+          camarero: ['cliente'],
+          cocinero: ['cocina'],
+          gerente: ['gerente']
+        };
+
+        document.querySelectorAll('nav button').forEach(btn => {
+          if (btn.innerText !== 'Cerrar Sesión') {
+            btn.classList.add('hidden');
+          }
+        });
+
+        botones[rol]?.forEach(id => {
+          const btn = [...document.querySelectorAll('nav button')].find(b => b.innerText.toLowerCase() === id);
+          if (btn) btn.classList.remove('hidden');
+        });
+      }
+
+      const rol = localStorage.getItem('rol');
+      if (rol) {
+        document.getElementById('login').classList.add('hidden');
+        document.getElementById('app').classList.remove('hidden');
+        mostrarVista(rol);
+        restringirVistasPorRol(rol);
+        mostrarSaludo(rol);
+      }
+
+      window.iniciarSesion = iniciarSesion;
+      window.cerrarSesion = cerrarSesion;
+      window.mostrarVista = mostrarVista;
+    });
   </script>
-
 </body>
 </html>
