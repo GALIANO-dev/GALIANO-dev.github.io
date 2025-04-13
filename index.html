@@ -3,74 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Gestión para Restaurante</title>
+  <title>Proyecto Restaurante | Grupo D</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: #333; }
-    header { background: #3e2723; color: white; padding: 1rem 2rem; text-align: center; }
-    section { padding: 2rem; max-width: 960px; margin: auto; }
-    h2 { color: #3e2723; }
-    .equipo li { margin-bottom: 0.5rem; }
-    footer { background: #222; color: white; text-align: center; padding: 1rem; margin-top: 2rem; }
-    a { color: #3e2723; text-decoration: none; }
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    .hero {
+      background: linear-gradient(to right, #ff8c00, #ffb347);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    .section-title {
+      margin-top: 60px;
+      margin-bottom: 20px;
+    }
+    footer {
+      background-color: #f8f9fa;
+      padding: 30px 0;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Sistema de Gestión para Restaurante</h1>
-    <p>Proyecto Académico - Construcción de Software</p>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Restaurante App</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#descripcion">Descripción</a></li>
+          <li class="nav-item"><a class="nav-link" href="#funciones">Funciones</a></li>
+          <li class="nav-item"><a class="nav-link" href="#equipo">Equipo</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <h1>Gestión Inteligente para Restaurantes</h1>
+      <p class="lead">Una solución digital integrada para camareros, cocineros y gerentes.</p>
+      <a href="https://github.com/galiano-dev" class="btn btn-light mt-3" target="_blank">Ver en GitHub</a>
+    </div>
   </header>
-  
-  <section>
-    <h2>📋 Descripción del Proyecto</h2>
-    <p>Este sistema académico permite gestionar las operaciones de un restaurante mediante el uso de tablets, red local y funciones automatizadas. Facilita la atención al cliente y optimiza los procesos internos como pedidos, cocina y facturación.</p>
 
-    <h2>✨ Funcionalidades principales</h2>
+  <section class="container" id="descripcion">
+    <h2 class="section-title">Descripción del Proyecto</h2>
+    <p>Este proyecto permite digitalizar las operaciones de un restaurante mediante el uso de tablets para pedidos, pizarras digitales para cocina y emisión de boletas vía red inalámbrica. Está desarrollado bajo la metodología Scrum, gestionado en GitHub y con automatización CI/CD.</p>
+  </section>
+
+  <section class="container" id="funciones">
+    <h2 class="section-title">Funciones Clave</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <h5>Menú Interactivo</h5>
+        <p>El cliente escanea un código QR y accede al menú digital.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>Pedidos a Cocina</h5>
+        <p>Los pedidos se envían automáticamente a la pizarra de cocina.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>Facturación Inalámbrica</h5>
+        <p>El camarero emite boletas desde una tablet conectada a red.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container" id="equipo">
+    <h2 class="section-title">Equipo de Desarrollo</h2>
     <ul>
-      <li>Visualización digital del menú</li>
-      <li>Toma de pedidos desde dispositivos móviles</li>
-      <li>Monitoreo de estado de platos desde cocina</li>
-      <li>Facturación y generación de boletas</li>
-      <li>Paneles diferenciados: camareros, cocina y gerente</li>
-      <li>Reportes de pedidos y ventas</li>
-    </ul>
-
-    <h2>🎯 Requerimientos</h2>
-    <p><strong>Negocio:</strong> Optimización del proceso de atención y servicio en restaurantes.</p>
-    <p><strong>Usuario:</strong> Camareros, cocineros y gerente acceden a diferentes vistas con funcionalidades específicas.</p>
-    <p><strong>Sistema:</strong> Conectividad local, estabilidad, y respuesta inmediata a interacciones.</p>
-
-    <h2>📊 Métricas de Calidad</h2>
-    <ul>
-      <li>Desempeño del sistema (velocidad y estabilidad)</li>
-      <li>Facilidad de uso e interfaz intuitiva</li>
-      <li>Fiabilidad y tolerancia a errores</li>
-      <li>Escalabilidad y mantenimiento</li>
-    </ul>
-
-    <h2>📐 Estándares aplicados</h2>
-    <ul>
-      <li>ISO/IEC 9126</li>
-      <li>CMMI</li>
-      <li>PSP</li>
-      <li>ISO/IEC 14598, 15910, 18789</li>
-    </ul>
-
-    <h2>👨‍💻 Integrantes del Equipo</h2>
-    <ul class="equipo">
+      <li>Mario Alexander Galiano Acuña (Desarrollador)</li>
       <li>Davidpo Torres Centeno</li>
       <li>Juan Carlos Rojas Quispe</li>
-      <li>Jonathan Hernan Huari Ninanya</li>
-      <li>Rolando Lázaro Quispe Garcia</li>
-      <li><strong>Mario Alexander Galiano Acuña</strong></li>
-      <li>Maximo Chavez Diaz</li>
+      <li>Jonathan Huari Ninanya</li>
+      <li>Rolando Lázaro Quispe García</li>
+      <li>Máximo Chávez Díaz</li>
     </ul>
+  </section>
 
-    <h2>🌐 Repositorio del Proyecto</h2>
-    <p><a href="https://github.com/GALIANO-dev" target="_blank">https://github.com/GALIANO-dev</a></p>
+  <section class="container" id="contacto">
+    <h2 class="section-title">Contacto</h2>
+    <p>¿Quieres más información o colaborar con el proyecto?</p>
+    <a href="mailto:mario.galiano@ejemplo.com" class="btn btn-outline-primary">Escríbenos</a>
   </section>
 
   <footer>
-    <p>&copy; 2025 - Universidad Continental - Construcción de Software</p>
+    <p>© 2025 Proyecto Restaurante | Universidad Continental | Grupo D</p>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
